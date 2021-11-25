@@ -70,20 +70,14 @@ class Video(Resource):
         args = video_patch_args.parse_args()
         video = VideoModel.query.get_or_404(video_id)
 
-        if "name" in args:
+        if args.get("name"):
             video.name = args["name"]
-        if "likes" in args:
+        if args.get("likes"):
             video.name = args["likes"]
-        if "views" in args:
+        if args.get("views"):
             video.name = args["views"]
-        # db.session.add(video)
         db.session.commit()
-        print(video)
         return video, 201
-
-    # def delete(self, video_id):
-    #     del videos[video_id]
-    #     return "", 204
 
 
 api.add_resource(Video, "/video/<int:video_id>")

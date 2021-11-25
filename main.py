@@ -32,6 +32,12 @@ video_put_args.add_argument(
     "likes", type=int, help="Likes of the video is required", required=True
 )
 
+
+video_patch_args = reqparse.RequestParser()
+video_patch_args.add_argument("name", type=str, help="Name of the video is required")
+video_patch_args.add_argument("views", type=int, help="Views of the video is required")
+video_patch_args.add_argument("likes", type=int, help="Likes of the video is required")
+
 resource_fields = {
     "id": fields.Integer,
     "name": fields.String,
@@ -57,6 +63,22 @@ class Video(Resource):
         )
         db.session.add(video)
         db.session.commit()
+        return video, 201
+
+    @marshal_with(resource_fields)
+    def patch(self, video_id):
+        args = video_patch_args.parse_args()
+        video = VideoModel.query.get_or_404(video_id)
+
+        if "name" in args:
+            video.name = args["name"]
+        if "likes" in args:
+            video.name = args["likes"]
+        if "views" in args:
+            video.name = args["views"]
+        # db.session.add(video)
+        db.session.commit()
+        print(video)
         return video, 201
 
     # def delete(self, video_id):

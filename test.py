@@ -8,8 +8,12 @@ print(response.json())
 # print(response.json())
 
 
-# response = requests.delete(f"{BASE}video/1")
-# print(response)
+response = requests.get(f"{BASE}video/1")
+print(response.json())
+
+
+# response = requests.get(f"{BASE}video/1")
+# print(response.json())
 
 response = requests.get(f"{BASE}video/2")
 print(response.json())
